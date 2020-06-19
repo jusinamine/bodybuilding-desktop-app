@@ -1,6 +1,19 @@
+const {ipcRenderer} = require('electron')
 
+const PROGRAM_PARAMS = {
+    1:'برنامج مخصص للرجال',
+    2:'برنامج مخصص للنساء',
+    3:'تنشيف',
+    4:'تضخيم',
+    5:'تخسيس',
+    6:'طبيعي',
+    7:'غير طبيعي',
+    8:'سرعة أيض سريعة',
+    9:'سرعة أيض متوسطة'
+};
 let choices = document.querySelectorAll('.choice');
 let button = document.querySelector('.btn-bx input');
+
 
 let choicesText = [];
 let checkClick = [];
@@ -48,13 +61,24 @@ button.addEventListener('click', (event) =>{
         console.log("error msg");
         
     }else{
+        let choiceText = null;
+        let choicesCoded = null;
         personInfo.age = parseInt(document.getElementById("age-p").value); 
         personInfo.height = parseInt(document.getElementById("height-p").value);
         personInfo.weight = parseInt(document.getElementById("weight-p").value);
 
-        for(var i=0; i<choiceSelected.length;i++)   personInfo.program.push(choiceSelected.item(i).innerTex);
-        console.log(personInfo);
-        
+        for(var i=0; i<choiceSelected.length;i++){
+            choiceText = choiceSelected.item(i).innerText
+            choicesCoded = Object.keys(PROGRAM_PARAMS).find(key => PROGRAM_PARAMS[key] === choiceText);
+            personInfo.program.push(choicesCoded);
+            
+        }   
+        console.log(personInfo.program);
+        let data = {"data":personInfo, "type":"personProgram"};
+        ipcRenderer.send('requestHandler',data);
     }
     
 });
+
+
+ 

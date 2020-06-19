@@ -8,151 +8,108 @@
   8:'سرعة أيض سريعة',
   9:'سرعة أيض متوسطة' */
 //arabic const
-const PROTEINE = 'دهون';
-const CARBS = 'كارب';
-const FATS = 'دهون'
 
-var bodyProg = (weight,sexe,goal,metabolism,trainNature) =>{
+let cuttingDiet = (weight,sexe,nature) =>{
     let proteine = null;
     let carbs = null;
     let fats = null;
-    console.log(sexe==1);
-    if(sexe == 1){ //male case
-        if(trainNature == 6){//natural case
-            proteine = 3.5*weight;
-        }
-        else if(trainNature == 7){//not natural case
-            proteine = 3*weight;
-        }
-    
-        if(goal == 3){ //cutting case
-            carbs = 4*weight;
-            fats = 0.5*weight;
-         
-            return [
-                [PROTEINE,proteine],
-                [CARBS,carbs],
-                [FATS,fats,'في الوجبة الأولى فقط'],
-                ['في اليوم الأول من الأسبوع السادس'],
-                [PROTEINE,proteine],
-                [CARBS,weight*5.5],
-                [FATS,fats,'في الوجبة الأولى فقط'],
-                ['في اليوم الثاني من الأسبوع السادس'],
-                [PROTEINE,proteine],
-                [CARBS,carbs],
-                [FATS,0]        
-            ];
-        }
-        else if(goal == 5){ //weightloss
-            carbs = weight*1.5;
-            proteine = weight*2.5;
-            fats = weight*0.5;
+    if(sexe == 1){
+        carbs = 4*weight;
+        fats = 0.5*weight;
 
+        if(nature ==6) proteine = 3.5*weight;
+        else proteine = 3*weight;
+
+        return [
+            [proteine,carbs,fats],
+            [proteine,weight*5.5,fats],
+            [proteine,carbs,0]
+        ];
+    }
+    else if(sexe ==2){
+        proteine = 2.5*weight;
+        carbs = 2*weight;
+        fats = 0.5*weight;
+
+        return [
+            [proteine,carbs,fats],
+            [proteine,weight*3,fats],
+            [proteine,carbs,0]
+        ];
+    }
+}
+let weightlossDiet = (weight,sexe) =>{
+    let proteine = null;
+    let carbs = null;
+    let fats = null;
+    if(sexe == 1){
+        proteine = 1.5*weight;
+        carbs = 2.5*weight;
+        fats = 0.5*weight;
+
+        return [
+            [proteine,carbs,fats],
+            [proteine,weight*4,fats],
+            [proteine,carbs,0]
+        ];
+    }
+    else if(sexe ==2){
+        proteine = 1*weight;
+        carbs = 1.5*weight;
+        fats = 0.5*weight;
+
+        return [
+            [proteine,carbs,fats],
+            [proteine,weight*2.5,fats],
+            [proteine,carbs,0]
+        ];
+    }
+}
+
+let bulkingDiet = (weight,sexe,nature,metabolism) =>{
+    let proteine = null;
+    let carbs = null;
+    let fats = null;
+    if(sexe == 1){
+        carbs = 5.5*weight;
+        fats = 1.5*weight;
+        if(nature ==6) proteine = 3.5*weight;
+        else proteine = 3*weight;
+
+        if(metabolism == 9){
             return [
-                [PROTEINE,proteine],
-                [CARBS,carbs],
-                [FATS,fats,'في الوجبة الأولى فقط'],
-                ['في اليوم الأول من الأسبوع السادس'],
-                [PROTEINE,proteine],
-                [CARBS,weight*4],
-                [FATS,fats,'في الوجبة الأولى فقط'],
-                ['في اليوم الثاني من الأسبوع السادس'],
-                [PROTEINE,proteine],
-                [CARBS,carbs],
-                [FATS,0]        
+                [proteine,carbs,fats],
+                [proteine,weight*4,fats]
+            ]
+        }else if(metabolism == 8){
+            return [
+                [proteine,carbs,fats],
+                [proteine,weight*2.5,0],
             ];
-        }
-        else if(goal == 4){ //bulking case
-            carbs = 5.5*weight;
-            fats = 1.5*weight;
-            if(metabolism == 9){//metabolism normal
-                return [
-                    ['4','أيام تدريب تتناول فيهم'],
-                    [PROTEINE,proteine],
-                    [CARBS,carbs],
-                    [FATS,fats],
-                    ['3','أيام راحة تتناول فيهم'],
-                    [PROTEINE,proteine],
-                    [CARBS,4*weight],
-                    [FATS,fats],
-                ];
-            }else{ //metabolism fast
-                return [
-                    [PROTEINE,proteine],
-                    [CARBS,carbs],
-                    [FATS,fats],
-                    ['في الأسبوع السادس'],
-                    [PROTEINE,proteine],
-                    [CARBS,weight*2.5],
-                    [FATS,0]     
-                ];
-            }
         }
     }
-    else if(sexe == 2){
-        fats = weight*0.5;
-        if(goal == 3){ //cutting case
-            carbs = 2*weight;
-            proteine = 2.5*weight;
-            return [
-                [PROTEINE,proteine],
-                [CARBS,carbs],
-                [FATS,fats,'في الوجبة الأولى فقط'],
-                ['في اليوم الأول من الأسبوع السادس'],
-                [PROTEINE,proteine],
-                [CARBS,weight*3],
-                [FATS,fats,'في الوجبة الأولى فقط'],
-                ['في اليوم الثاني من الأسبوع السادس'],
-                [PROTEINE,proteine],
-                [CARBS,carbs],
-                [FATS,0]        
-            ];
-        }else if(goal == 5){ //weightloss
-            carbs = weight*1.5;
-            proteine = weight*1;
+    else if(sexe ==2){
+        proteine = 2.2*weight;
+        carbs = 4*weight;
+        fats = 0.5*weight;
 
+        if(metabolism == 9){
             return [
-                [PROTEINE,proteine],
-                [CARBS,carbs],
-                [FATS,fats],
-                ['في اليوم الأول من الأسبوع السادس'],
-                [PROTEINE,proteine],
-                [CARBS,weight*2.5],
-                [FATS,fats,'في الوجبة الأولى فقط'],
-                ['في اليوم الثاني من الأسبوع السادس'],
-                [PROTEINE,proteine],
-                [CARBS,carbs],
-                [FATS,0]        
+                [proteine,2*weight,fats],
+                [proteine,1.5*weight,fats]
+            ]
+        }else if(metabolism == 8){
+            return [
+                [proteine,carbs,fats],
+                [proteine,weight,0]
             ];
-        }else if(goal == 4){ //bulking case
-            carbs = 4*weight;
-            proteine = 2.2*weight;
-            if(metabolism == 9){//metabolism normal
-                return [
-                    ['4','أيام تدريب تتناول فيهم'],
-                    [PROTEINE,proteine],
-                    [CARBS,2*weight],
-                    [FATS,fats],
-                    ['3','أيام راحة تتناول فيهم'],
-                    [PROTEINE,proteine],
-                    [CARBS,1.5*weight],
-                    [FATS,fats],
-                ];
-            }else{ //metabolism fast
-                return [
-                    [PROTEINE,proteine],
-                    [CARBS,carbs],
-                    [FATS,fats],
-                    ['في الأسبوع السادس'],
-                    [PROTEINE,proteine],
-                    [CARBS,weight*1],
-                    [FATS,0]     
-                ];
-            }
+            
         }
     }
 }
 
 module.exports = {
-    bodyDiet : bodyProg
+    bulkingDiet : bulkingDiet,
+    weightlossDiet: weightlossDiet,
+    cuttingDiet: cuttingDiet
 }
