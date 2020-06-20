@@ -115,6 +115,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     color: #fff;
 }
 .sub-print{
@@ -189,4 +190,7 @@ body{
 }
 .save-bx input:hover{
     opacity: 0.8;
+}
+canvas{
+    display: none;
 }

@@ -1,4 +1,6 @@
 const {ipcRenderer} = require('electron')
+const html2canvas = require('html2canvas');
+const FileSaver = require('file-saver');
 
 const PROGRAM_PARAMS = {
     1:'برنامج مخصص للرجال',
@@ -13,7 +15,8 @@ const PROGRAM_PARAMS = {
 };
 let choices = document.querySelectorAll('.choice');
 let button = document.querySelector('.btn-bx input');
-
+let backButton = document.getElementById('back');
+let saveButton = document.getElementById('save');
 
 let choicesText = [];
 let checkClick = [];
@@ -58,7 +61,7 @@ button.addEventListener('click', (event) =>{
     choiceSelected = document.getElementsByClassName('selected');
 
     if(choiceSelected.length < 4){
-        console.log("error msg");
+        alert("أدخل كل المعلومات اللازمة"); 
         
     }else{
         let choiceText = null;
@@ -80,5 +83,34 @@ button.addEventListener('click', (event) =>{
     
 });
 
+backButton.addEventListener('click',(event)=>{
+    document.getElementsByClassName('print-bx')[0].classList.add('display-none');
+    document.getElementsByClassName('main-bx')[0].classList.remove('display-none');
+});
 
- 
+for(elm of document.querySelectorAll('.sub-print')){
+    if(elm.classList.length == 1)
+        console.log(elm.id);
+}
+saveButton.addEventListener('click',(event)=>{
+    for(elm of document.querySelectorAll('.sub-print')){
+        if(elm.classList.length == 1)
+            makeScreenshot(elm.id);
+    }
+    
+});
+
+function makeScreenshot(elm)
+{
+    html2canvas(document.getElementById(elm)).then(function(canvas) {
+        document.body.appendChild(canvas);
+        var canvas = document.querySelector('canvas');
+        let fileName = document.querySelectorAll('#'+elm+' .title-1')[0].innerText+ Math.floor(Math.random() * 100000000);
+       
+        // draw to canvas...
+        canvas.toBlob(function(blob) {
+            FileSaver.saveAs(blob, fileName+".png");
+        })
+        
+    });
+}
